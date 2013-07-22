@@ -1,14 +1,16 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace FlickrDeDupr
+﻿namespace FlickrDeDupr
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+
     ///<summary>
     /// Converts a string array to a comma separated string
     ///</summary>
     public class ArrayToCommaSeparatedStringConverter : IValueConverter
     {
+        #region Public Methods and Operators
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -21,7 +23,7 @@ namespace FlickrDeDupr
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string[] theArray = value as string[];
+            var theArray = value as string[];
             if (theArray == null)
             {
                 throw new ArgumentException("Can only convert string arrays");
@@ -44,5 +46,7 @@ namespace FlickrDeDupr
         {
             return null;
         }
+
+        #endregion
     }
 }

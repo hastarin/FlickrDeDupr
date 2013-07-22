@@ -50,20 +50,20 @@
       <ListBox.ItemContainerStyle>
         <Style TargetType="ListBoxItem">
           <Setter Property="Padding" Value="3,8,3,8" />
-          <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+          <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_OnMouseDoubleClick" />
           <Setter Property="Width" Value="120" />
         </Style>
       </ListBox.ItemContainerStyle>
     </ListBox>
     <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom">
       <StackPanel Orientation="Horizontal">
-        <Button Height="23" Name="buttonRefresh" Width="75" Margin="10" Click="ButtonRefresh_Click"
+        <Button Height="23" Name="buttonRefresh" Width="75" Margin="10" Click="ButtonRefresh_OnClick"
                 ToolTip="This will take some time depending on how many photos you have and the speed of your connection.">Refresh</Button>
-        <Button Height="23" Name="buttonDelete" Width="144" Click="ButtonDelete_Click"
+        <Button Height="23" Name="buttonDelete" Width="144" Click="ButtonDelete_OnClick"
                 ToolTip="Deletes the selected photos.  Duplicates are auto selected by default.">
           Delete Selected Photos
         </Button>
-        <Button Height="23" Name="buttonClearAuthCache" Width="101" Margin="10" Click="ButtonClearAuthCache_Click"
+        <Button Height="23" Name="buttonClearAuthCache" Width="101" Margin="10" Click="ButtonClearAuthCache_OnClick"
                 ToolTip="Clears the programs authorization for accessing your account.">Clear Auth Cache</Button>
       </StackPanel>
     </Grid>
