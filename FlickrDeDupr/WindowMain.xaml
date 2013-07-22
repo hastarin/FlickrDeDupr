@@ -1,0 +1,71 @@
+﻿<Window x:Class="FlickrDeDupr.WindowMain" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:FlickrDeDupr="clr-namespace:FlickrDeDupr"
+        Title="FlickrDeDupr" Height="600" Width="800">
+  <Grid>
+    <Grid.Resources>
+      <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate>
+                  <TextBlock>
+                    No duplicates found.  Please click refresh to find duplicates.
+                  </TextBlock>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </DataTrigger>
+        </Style.Triggers>
+      </Style>
+    </Grid.Resources>
+    <ListBox Name="listViewResults"
+             ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DuplicatePhotos, Mode=OneWay}"
+             SelectionMode="Extended" Margin="0,0,0,49" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel IsItemsHost="True" />
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Background="Tan">
+            <StackPanel Orientation="Vertical">
+              <StackPanel.Resources>
+                <FlickrDeDupr:ArrayToCommaSeparatedStringConverter x:Key="ArrayToCommaSeparatedStringConverter" />
+              </StackPanel.Resources>
+              <Label Content="{Binding Title}" HorizontalAlignment="Center" />
+              <Image Source="{Binding Url}" Width="75"
+                     ToolTip="{Binding Tags, Converter={StaticResource ArrayToCommaSeparatedStringConverter}}" />
+              <Label Content="{Binding TakeOn}" FontSize="10" ToolTip="Taken On" />
+              <Label Content="{Binding UploadedOn}" FontSize="10" ToolTip="Uploaded On" />
+              <StackPanel Orientation="Horizontal">
+                <Label Content="Views:" />
+                <Label Content="{Binding Views}" />
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+      <ListBox.ItemContainerStyle>
+        <Style TargetType="ListBoxItem">
+          <Setter Property="Padding" Value="3,8,3,8" />
+          <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+          <Setter Property="Width" Value="120" />
+        </Style>
+      </ListBox.ItemContainerStyle>
+    </ListBox>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom">
+      <StackPanel Orientation="Horizontal">
+        <Button Height="23" Name="buttonRefresh" Width="75" Margin="10" Click="ButtonRefresh_Click"
+                ToolTip="This will take some time depending on how many photos you have and the speed of your connection.">Refresh</Button>
+        <Button Height="23" Name="buttonDelete" Width="144" Click="ButtonDelete_Click"
+                ToolTip="Deletes the selected photos.  Duplicates are auto selected by default.">
+          Delete Selected Photos
+        </Button>
+        <Button Height="23" Name="buttonClearAuthCache" Width="101" Margin="10" Click="ButtonClearAuthCache_Click"
+                ToolTip="Clears the programs authorization for accessing your account.">Clear Auth Cache</Button>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</Window>
